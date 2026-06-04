@@ -12,8 +12,28 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="h-full antialiased">
-      <body className="min-h-full bg-stone-50 font-sans text-stone-950">{children}</body>
+    <html lang="en" className="h-full antialiased" suppressHydrationWarning>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                var theme = localStorage.getItem("theme");
+                if (!theme) theme = "system";
+                if (theme === "dark" || (theme === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
+                  document.documentElement.classList.add("dark");
+                  document.documentElement.style.colorScheme = "dark";
+                } else {
+                  document.documentElement.style.colorScheme = "light";
+                }
+              })();
+            `,
+          }}
+        />
+      </head>
+      <body className="min-h-full bg-stone-50 font-sans text-stone-950 dark:bg-stone-950 dark:text-stone-50">
+        {children}
+      </body>
     </html>
   );
 }

@@ -24,38 +24,41 @@ export function LoginForm() {
   }
 
   return (
-    <form onSubmit={submit} className="w-full max-w-md rounded-lg border border-rose-100 bg-white p-6 shadow-xl shadow-rose-950/10">
+    <form
+      onSubmit={submit}
+      className="w-full max-w-md rounded-lg border border-rose-100 bg-white p-6 shadow-xl shadow-rose-950/10 dark:border-stone-800 dark:bg-stone-900 dark:shadow-black/30"
+    >
       <div className="mb-8 flex items-center gap-3">
         <div className="flex size-11 items-center justify-center rounded-lg bg-rose-600 text-white">
           <HeartHandshake className="size-6" aria-hidden="true" />
         </div>
         <div>
           <p className="text-sm font-semibold uppercase tracking-wide text-rose-700">The Date Crew</p>
-          <h1 className="text-2xl font-semibold text-stone-950">Matchmaker Login</h1>
+          <h1 className="text-2xl font-semibold text-stone-950 dark:text-stone-50">Matchmaker Login</h1>
         </div>
       </div>
 
       <label className="mb-4 block">
-        <span className="mb-2 block text-sm font-medium text-stone-700">Username</span>
-        <span className="flex items-center gap-2 rounded-md border border-stone-200 bg-stone-50 px-3 focus-within:border-rose-400 focus-within:bg-white">
+        <span className="mb-2 block text-sm font-medium text-stone-700 dark:text-stone-300">Username</span>
+        <span className="flex items-center gap-2 rounded-md border border-stone-200 bg-stone-50 px-3 focus-within:border-rose-400 focus-within:bg-white dark:border-stone-700 dark:bg-stone-950 dark:focus-within:bg-stone-900">
           <UserRound className="size-4 text-stone-500" aria-hidden="true" />
           <input
             value={username}
             onChange={(event) => setUsername(event.target.value)}
-            className="h-11 w-full bg-transparent text-sm text-stone-950 outline-none"
+            className="h-11 w-full bg-transparent text-sm text-stone-950 outline-none dark:text-stone-50"
             autoComplete="username"
           />
         </span>
       </label>
 
       <label className="mb-4 block">
-        <span className="mb-2 block text-sm font-medium text-stone-700">Password</span>
-        <span className="flex items-center gap-2 rounded-md border border-stone-200 bg-stone-50 px-3 focus-within:border-rose-400 focus-within:bg-white">
+        <span className="mb-2 block text-sm font-medium text-stone-700 dark:text-stone-300">Password</span>
+        <span className="flex items-center gap-2 rounded-md border border-stone-200 bg-stone-50 px-3 focus-within:border-rose-400 focus-within:bg-white dark:border-stone-700 dark:bg-stone-950 dark:focus-within:bg-stone-900">
           <LockKeyhole className="size-4 text-stone-500" aria-hidden="true" />
           <input
             value={password}
             onChange={(event) => setPassword(event.target.value)}
-            className="h-11 w-full bg-transparent text-sm text-stone-950 outline-none"
+            className="h-11 w-full bg-transparent text-sm text-stone-950 outline-none dark:text-stone-50"
             type="password"
             autoComplete="current-password"
           />
@@ -72,7 +75,7 @@ export function LoginForm() {
         Sign in
       </button>
 
-      <p className="mt-5 rounded-md bg-stone-50 px-3 py-2 text-xs text-stone-600">
+      <p className="mt-5 rounded-md bg-stone-50 px-3 py-2 text-xs text-stone-600 dark:bg-stone-950 dark:text-stone-400">
         Sample credentials: <span className="font-semibold">admin</span> /{" "}
         <span className="font-semibold">matchmaker2026</span>
       </p>
