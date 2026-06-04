@@ -3,7 +3,11 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "TDC Matchmaker Dashboard",
-  description: "Internal dashboard for customer profiles, match suggestions, and AI-assisted introductions.",
+  description:
+    "Internal dashboard for customer profiles, match suggestions, and AI-assisted introductions.",
+  icons: {
+    icon: "/heart.png",
+  },
 };
 
 export default function RootLayout({
