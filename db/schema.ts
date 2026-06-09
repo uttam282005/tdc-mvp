@@ -1,0 +1,41 @@
+import { pgTable, text, integer, boolean, jsonb, timestamp, uuid } from "drizzle-orm/pg-core";
+
+export const profiles = pgTable("profiles", {
+  id: text("id").primaryKey(),
+  firstName: text("first_name").notNull(),
+  lastName: text("last_name").notNull(),
+  gender: text("gender").$type<"Male" | "Female">().notNull(),
+  dob: text("dob").notNull(),
+  age: integer("age").notNull(),
+  height: integer("height").notNull(),
+  maritalStatus: text("marital_status").$type<"Never Married" | "Divorced" | "Awaiting Divorce">().notNull(),
+  country: text("country").notNull(),
+  city: text("city").notNull(),
+  religion: text("religion").notNull(),
+  caste: text("caste").notNull(),
+  siblings: integer("siblings").notNull(),
+  wantKids: text("want_kids").$type<"Yes" | "No" | "Maybe">().notNull(),
+  income: integer("income").notNull(),
+  undergradCollege: text("undergrad_college").notNull(),
+  degree: text("degree").notNull(),
+  currentCompany: text("current_company").notNull(),
+  designation: text("designation").notNull(),
+  openToRelocate: text("open_to_relocate").$type<"Yes" | "No" | "Maybe">().notNull(),
+  openToPets: text("open_to_pets").$type<"Yes" | "No" | "Maybe">().notNull(),
+  languagesKnown: jsonb("languages_known").$type<string[]>().notNull(),
+  statusTag: text("status_tag").$type<"Onboarding" | "Searching" | "Matched">().notNull(),
+  assignedClient: boolean("assigned_client").default(false),
+  diet: text("diet"),
+  familyType: text("family_type"),
+  manglik: text("manglik").$type<"Yes" | "No" | "Maybe">(),
+  values: jsonb("values").$type<string[]>(),
+  bio: text("bio"),
+});
+
+export const notes = pgTable("notes", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  profileId: text("profile_id").references(() => profiles.id, { onDelete: "cascade" }).notNull(),
+  content: text("content").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});

@@ -32,11 +32,17 @@ export function DetailClient({ client, matches }: { client: Profile; matches: Ma
   const [insights, setInsights] = useState<Record<string, InsightState>>({});
 
   useEffect(() => {
-    const timer = window.setTimeout(() => {
-      setNotes(window.localStorage.getItem(`notes:${client.id}`) ?? "");
-    }, 0);
-
-    return () => window.clearTimeout(timer);
+    fetch(`/api/notes?profileId=${client.id}`)
+      .then((res) => {
+        if (!res.ok) throw new Error("Failed to fetch notes");
+        return res.json() as Promise<{ content: string }>;
+      })
+      .then((data) => {
+        setNotes(data.content);
+      })
+      .catch((err) => {
+        console.error("Failed to load notes from database:", err);
+      });
   }, [client.id]);
 
   useEffect(() => {
@@ -69,10 +75,23 @@ export function DetailClient({ client, matches }: { client: Profile; matches: Ma
   }, [client, matches]);
 
   function saveNotes() {
-    window.localStorage.setItem(`notes:${client.id}`, notes);
-    setToast("Notes saved for this customer.");
-    window.setTimeout(() => setToast(""), 2200);
+    fetch("/api/notes", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ profileId: client.id, content: notes }),
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error("Failed to save notes");
+        setToast("Notes saved to database.");
+        window.setTimeout(() => setToast(""), 2200);
+      })
+      .catch((err) => {
+        console.error("Failed to save notes:", err);
+        setToast("Failed to save notes.");
+        window.setTimeout(() => setToast(""), 2200);
+      });
   }
+
 
   const groupedFields = useMemo(
     () => [
